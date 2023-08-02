@@ -1,0 +1,32 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "search  google",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "base-x": "^4.0.0",
+    "body-parser": "^1.20.2",
+    "cheerio": "^1.0.0-rc.12",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.2",
+    "iconv-lite": "^0.6.3",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.22",
+    "puppeteer": "^20.5.0",
+    "puppeteer-extra": "^3.3.6",
+    "run-parallel": "^1.2.0",
+    "utf8": "^3.0.0",
+    "utf8-decode": "^1.0.2",
+    "utf8-encode": "^1.0.0"
+  }
+}
