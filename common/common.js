@@ -11,8 +11,12 @@ const proxys = fs.readFileSync("./proxy.txt", "utf-8").split("\n").map((item) =>
         password: items[3].replace(/\r/g, ''),
     }
 });
-log("proxys",proxys);
 class Commom{
+    async  delay (milliseconds=500) {
+        return new Promise(resolve => {
+          setTimeout(resolve, milliseconds);
+        });
+    };
     // Hàm lấy kích thước của cửa sổ trình duyệt
     async getWindowSize(page) {
         const dimensions = await page.evaluate(() => {
@@ -74,6 +78,45 @@ class Commom{
             }
         } catch (e) {
             return false;
+        }
+    }
+    async scrollToBottomToTop(page,ms=5000){
+        log("scrollToBottom")
+        await page.waitForTimeout(ms);
+        await this.scrollToBottom(page);
+        log("scrollToTop")
+        await page.waitForTimeout(ms);
+        await this.scrollToTop(page);
+    }
+    async clickRandom(page,selector=""){
+        try{
+            await page.waitForSelector(selector);
+            const randomItems = await page.$$(selector);
+            log("item random",randomItems.length);
+            /**
+             * click vào 1 bài viết bất kỳ random rồi chờ 10s
+             */
+            if (randomItems.length > 0) {
+                log("Click vào 1 bài viết bất kỳ random rồi chờ 10s");
+                let item = randomItems[Math.floor(Math.random() * randomItems.length)];
+                await item.click();
+                await this.scrollToBottomToTop(page)
+            }
+        }catch(e){
+            log('clickRandom :' +selector, e.message);
+        }
+    }
+    async clickRandomIframe(page,selectorIframe,selector){
+        try {
+            await page.waitForSelector(selectorIframe);
+            const iframeElements = await page.$$(selectorIframe);
+            if (iframeElements.length > 0) {
+                let iframe = iframeElements[Math.floor(Math.random() * iframeElements.length)];
+                const iframeElement = await iframe.contentFrame();
+                await iframeElement.click(selector);
+            }
+        }catch(e){
+            log('clickRandomIframe :' +selector, e.message);
         }
     }
 }
